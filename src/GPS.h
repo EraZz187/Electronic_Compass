@@ -1,21 +1,6 @@
-#include "TinyGPSPlus.h"
-using namespace std;
+#include <TinyGPSPlus.h>
 
-unsigned long oldRefresh = 0;
-bool refreshTick;
-
-refreshTick = false;
-
-if (((millis() - oldRefresh) >= 5000) || (oldRefresh == 0))
+bool checkForGPSConnection(TinyGPSPlus &gps)
 {
-    oldRefresh = millis();
-    refreshTick = true;
-}
-
-bool checkForconnection()
-{
-  if (refreshTick)
-  {
-    return (GPS.satellites.value() > 0)
-  }
-}
+  return gps.satellites.value() > 0;
+};
