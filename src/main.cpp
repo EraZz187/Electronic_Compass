@@ -4,6 +4,7 @@
 #include "mDNSHandler.h"
 #include "GPSManager.h"
 #include <TinyGPSPlus.h>
+#include "WebServerHandler.h"
 
 // Zugangsdaten und Netzwerkkonfiguration
 const char *ap_ssid = "Locatinator";
@@ -28,10 +29,12 @@ void setup()
   startAccessPoint(ap_ssid, ap_password, local_IP, gateway, subnet); // Startet eigenen Access Point (AP-Modus)
   setupOTA(sta_hostname);                                            // Initialisiert OTA (Over-the-Air) Updates
   setupMDNS(sta_hostname);                                           // Startet mDNS-Dienst (z. B. locatinator.local erreichbar)
+  server.begin();
 }
 
 void loop()
 {
   handleOTA();                                                       // Handhabt eingehende OTA-Anfragen
   checkForGPSConnection(gps);                                        // Überprüft GPS-Datenverbindung
+  handleClient(server);
 }
