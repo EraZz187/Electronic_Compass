@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ESP32 Sensorwerte</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    #sensorwert {
+      font-weight: bold;
+      color: #007BFF;
+      font-size: 2em;
+    }
+  </style>
+  <script>
+    // Funktion zum Abrufen des Sensorwertes vom Server
+    function updateSensor() {
+      fetch('/sensor')
+        .then(response => response.json()) // JSON parsen
+        .then(data => {
+          document.getElementById("sensorwert").textContent = data.wert;
+        })
+        .catch(console.error);
+    }
+
+    // Sensorwert alle 2 Sekunden aktualisieren
+    setInterval(updateSensor, 2000);
+
+    // Beim Laden der Seite sofort Wert abrufen
+    window.onload = updateSensor;
+  </script>
+</head>
+<body>
+  <h1>Sensorwert: <span id="sensorwert">---</span></h1>
+</body>
+</html>

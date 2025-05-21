@@ -1,7 +1,7 @@
-#include <Arduino.h>
-#include <GPS.h>  // deine eigene Datei vermutlich
 #include "GPSManager.h"
+#include <TinyGPSPlus.h>
 
-void checkForGPSConnection(TinyGPSPlus& gps) {
-  ::checkForGPSConnection(gps); // deine bestehende Implementierung
-}
+uint32_t checkForGPSConnection(TinyGPSPlus &gps)
+{
+  return gps.satellites.value() > 0;
+};
